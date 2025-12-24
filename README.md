@@ -1,24 +1,26 @@
-# 📈 Deep Reinforcement Learning for Portfolio Management  
-### A Self-Designed RL System for Indian Equity Markets
+# 📈 Deep Reinforcement Learning for Portfolio Management
 
-> **Not a tutorial clone. Not a Kaggle script.**  
-> This project treats portfolio management as a **sequential decision-making problem** and solves it using **deep reinforcement learning**, realistic market constraints, and real Indian equity data.
+**A Self-Designed RL System for Indian Equity Markets**
 
-I designed and implemented an **end-to-end reinforcement learning pipeline** that learns how to **dynamically allocate capital across multiple stocks and cash**, optimizing long-term portfolio growth while accounting for **transaction costs, market dynamics, and risk**.
+Not a tutorial clone. Not a Kaggle script.
+
+This project treats portfolio management as a sequential decision-making problem and solves it using deep reinforcement learning, realistic market constraints, and real Indian equity data.
+
+I designed and implemented an end-to-end reinforcement learning pipeline that learns how to dynamically allocate capital across multiple stocks and cash, optimizing long-term portfolio growth while accounting for transaction costs, market dynamics, and risk.
 
 ---
 
 ## 💡 Why This Project Exists
 
-Most trading projects focus on **predicting prices**.  
-Real portfolio management is about **allocating capital over time**.
+Most trading projects focus on predicting prices. **Real portfolio management is about allocating capital over time.**
 
 This project is built around that idea.
 
-Key principles:
-- Decisions are **sequential**, not independent
-- Capital is **finite**
-- Rebalancing has a **cost**
+### Key Principles
+
+- Decisions are sequential, not independent
+- Capital is finite
+- Rebalancing has a cost
 - Risk matters as much as return
 
 ---
@@ -28,13 +30,13 @@ Key principles:
 - Learns **how to allocate capital**, not where price will go
 - Operates on **multiple stocks + cash**
 - Rebalances portfolios while paying **transaction costs**
-- Learns directly from **market interaction**, not labeled data
+- Learns directly from market interaction, **not labeled data**
 
 ---
 
 ## 🧠 Core Features
 
-- Deep Reinforcement Learning for **portfolio optimization**
+- **Deep Reinforcement Learning** for portfolio optimization
 - **Actor–Critic architecture** with continuous action space
 - **CNN-based policy network** for market state encoding
 - **Portfolio Vector Memory (PVM)** for stable learning
@@ -42,7 +44,7 @@ Key principles:
   - Transaction costs
   - Cash allocation
   - Portfolio rebalancing
-- Technical indicators as part of the state:
+- **Technical indicators** as part of the state:
   - MACD
   - RSI
   - CCI
@@ -54,191 +56,188 @@ Key principles:
 
 ## 📊 Market Data
 
-- **Market:** NSE (India)
-- **Universe:** Selected NIFTY 50 stocks
-- **Source:** Yahoo Finance (`yfinance`)
-- **Period:** `2015-03-11 → 2024-09-05`
-- **Frequency:** Daily OHLC
+| Property | Value |
+|----------|-------|
+| **Market** | NSE (India) |
+| **Universe** | Selected NIFTY 50 stocks |
+| **Source** | Yahoo Finance (yfinance) |
+| **Period** | 2015-03-11 → 2024-09-05 |
+| **Frequency** | Daily OHLC |
 
-🧩 State Representation
+---
 
-At every timestep, the agent observes a 3D tensor:
+## 🧩 State Representation
 
+At every timestep, the agent observes a **3D tensor**:
+
+```
 (features, stocks, window_length)
+```
 
-Engineered Features
+### Engineered Features
 
-Close / Open
+- Close / Open
+- High / Open
+- Low / Open
+- MACD
+- RSI
+- CCI
+- ADX
+- Next-day Open / Current Open
 
-High / Open
+This **price-relative formulation** improves generalization across assets and market regimes.
 
-Low / Open
+---
 
-MACD
+## 🎯 Action Space
 
-RSI
+**Continuous allocation vector:**
 
-CCI
-
-ADX
-
-Next-day Open / Current Open
-
-This price-relative formulation improves generalization across assets and market regimes.
-
-🎯 Action Space
-
-Continuous allocation vector:
-
+```
 (number_of_stocks + 1)
+```
 
+- Includes cash
+- Softmax-normalized
+- Portfolio weights always sum to 1
 
-Includes cash
+**No leverage. No unrealistic shortcuts.**
 
-Softmax-normalized
+---
 
-Portfolio weights always sum to 1
+## 💰 Reward Design
 
-No leverage. No unrealistic shortcuts.
+The agent is rewarded based on **portfolio value evolution**, not raw price changes.
 
-💰 Reward Design
+### Reward Function
 
-The agent is rewarded based on portfolio value evolution, not raw price changes.
+- Encourages long-term growth
+- Penalizes drawdowns
+- Accounts for transaction costs
+- Discourages excessive rebalancing
 
-Reward function:
+**Aligned with real investment objectives.**
 
-Encourages long-term growth
+---
 
-Penalizes drawdowns
+## 🏗️ System Architecture
 
-Accounts for transaction costs
+### Policy Network (Actor)
 
-Discourages excessive rebalancing
+- CNN feature extractor over market states
+- Learnable cash bias
+- Softmax output for portfolio allocation
 
-Aligned with real investment objectives.
+### Value Network (Critic)
 
-🏗️ System Architecture
-Policy Network (Actor)
+- Estimates action-value (Q)
+- Consumes:
+  - Market state
+  - Portfolio weights
+  - Portfolio value
+  - Action vector
 
-CNN feature extractor over market states
+### Portfolio Vector Memory (PVM)
 
-Learnable cash bias
+- Stores historical allocations
+- Improves training stability
+- Reduces variance and oscillations
 
-Softmax output for portfolio allocation
+---
 
-Value Network (Critic)
+## 🧪 Training Setup
 
-Estimates action-value (Q)
+| Component | Technology |
+|-----------|------------|
+| **Frameworks** | TensorFlow, OpenAI Gym |
+| **Optimizer** | Adam |
+| **Replay Memory** | Experience replay |
+| **Training** | Batch-based |
+| **Scalability** | tf.distribute.MirroredStrategy |
 
-Consumes:
+Built for **clarity, extensibility, and experimentation**.
 
-Market state
+---
 
-Portfolio weights
-
-Portfolio value
-
-Action vector
-
-Portfolio Vector Memory (PVM)
-
-Stores historical allocations
-
-Improves training stability
-
-Reduces variance and oscillations
-
-🧪 Training Setup
-
-Frameworks: TensorFlow, OpenAI Gym
-
-Optimizer: Adam
-
-Replay Memory: Experience replay
-
-Training: Batch-based
-
-Scalability: tf.distribute.MirroredStrategy
-
-Built for clarity, extensibility, and experimentation.
-
-📈 Evaluation
+## 📈 Evaluation
 
 Performance is evaluated using:
 
-Final portfolio value
+- Final portfolio value
+- Mean / min / max portfolio value
+- Maximum drawdown
+- Asset allocation dynamics over time
 
-Mean / min / max portfolio value
+### Visual Analysis
 
-Maximum drawdown
+- Portfolio value curve
+- Final asset allocation
+- Weight evolution per stock
 
-Asset allocation dynamics over time
+---
 
-Visual Analysis
+## 🛠️ Installation
 
-Portfolio value curve
-
-Final asset allocation
-
-Weight evolution per stock
-
-🛠️ Installation
+```bash
 pip install tensorflow gym yfinance ta numpy pandas matplotlib seaborn tqdm
+```
 
-▶️ How to Run
+---
 
-Download historical market data
+## ▶️ How to Run
 
-Preprocess OHLC data and compute indicators
+1. Download historical market data
+2. Preprocess OHLC data and compute indicators
+3. Initialize the trading environment
+4. Train the RL agent
+5. Evaluate on validation / test sets
+6. Analyze portfolio behavior visually
 
-Initialize the trading environment
+---
 
-Train the RL agent
+## 📌 What Makes This Project Different
 
-Evaluate on validation / test sets
+- Built around **capital allocation**, not price prediction
+- Uses **realistic market constraints**
+- **Research-oriented** system design
+- Clean separation of environment, agent, and training loop
+- Easy to extend to:
+  - PPO / SAC
+  - Risk-adjusted rewards
+  - Larger asset universes
+  - Paper trading
 
-Analyze portfolio behavior visually
+---
 
-📌 What Makes This Project Different
+## 🔮 Next Steps
 
-Built around capital allocation, not price prediction
+- Optimize for Sharpe / Sortino ratio
+- Risk-aware reward shaping
+- PPO / SAC implementation
+- Live paper-trading integration
+- Hyperparameter tuning
+- Multi-market expansion
 
-Uses realistic market constraints
+---
 
-Research-oriented system design
+## 👤 Author
 
-Clean separation of environment, agent, and training loop
-
-Easy to extend to:
-
-PPO / SAC
-
-Risk-adjusted rewards
-
-Larger asset universes
-
-Paper trading
-
-🔮 Next Steps
-
-Optimize for Sharpe / Sortino ratio
-
-Risk-aware reward shaping
-
-PPO / SAC implementation
-
-Live paper-trading integration
-
-Hyperparameter tuning
-
-Multi-market expansion
-
-👤 Author
-
-Utkarsh Alshi
-Software Engineer | Reinforcement Learning | Financial ML
+**Utkarsh Alshi**  
+Software Engineer | Reinforcement Learning | Financial ML  
 📍 India
 
-Built out of curiosity, engineering rigor, and a desire to understand how intelligent systems allocate capital under uncertainty. explanation**
+Built out of curiosity, engineering rigor, and a desire to understand how intelligent systems allocate capital under uncertainty.
 
-Just say the word 👌
+---
+
+## 📝 License
+
+[Add your license here]
+
+## 🤝 Contributing
+
+[Add contribution guidelines if applicable]
+
+---
+
+**Just say the word 👌**
