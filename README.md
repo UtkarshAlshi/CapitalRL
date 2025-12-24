@@ -60,15 +60,6 @@ Key principles:
 - **Period:** `2015-03-11 → 2024-09-05`
 - **Frequency:** Daily OHLC
 
-```text
-nifty50_data/
-├── RELIANCE.csv
-├── TCS.csv
-├── INFY.csv
-├── HDFCBANK.csv
-└── ...
-Only stocks with clean, continuous trading history are used.
-
 🧩 State Representation
 
 At every timestep, the agent observes a 3D tensor:
@@ -93,7 +84,7 @@ ADX
 
 Next-day Open / Current Open
 
-This price-relative formulation improves generalization across assets.
+This price-relative formulation improves generalization across assets and market regimes.
 
 🎯 Action Space
 
@@ -248,22 +239,6 @@ Utkarsh Alshi
 Software Engineer | Reinforcement Learning | Financial ML
 📍 India
 
-Built out of curiosity, engineering rigor, and a desire to understand how intelligent systems allocate capital under uncertainty.
-
-
----
-
-### ✅ Final note (important)
-This README:
-- Signals **independent thinking**
-- Sounds **confident but not arrogant**
-- Differentiates you from tutorial projects
-- Is **interview-ready**
-
-If you want next:
-- A **TL;DR section for recruiters**
-- A **Results section template**
-- A **README badge setup**
-- A **1-minute interview explanation**
+Built out of curiosity, engineering rigor, and a desire to understand how intelligent systems allocate capital under uncertainty. explanation**
 
 Just say the word 👌
