@@ -1,22 +1,24 @@
-# 📈 Deep Reinforcement Learning for Portfolio Management
+# 📈 CapitalRL  
+### Deep Reinforcement Learning for Portfolio Management
 
 **A Self-Designed RL System for Indian Equity Markets**
 
 Not a tutorial clone. Not a Kaggle script.
 
-This project treats portfolio management as a sequential decision-making problem and solves it using deep reinforcement learning, realistic market constraints, and real Indian equity data.
+**CapitalRL** treats portfolio management as a *sequential decision-making problem* and solves it using deep reinforcement learning, realistic market constraints, and real Indian equity data.
 
-I designed and implemented an end-to-end reinforcement learning pipeline that learns how to dynamically allocate capital across multiple stocks and cash, optimizing long-term portfolio growth while accounting for transaction costs, market dynamics, and risk.
+This project implements an **end-to-end reinforcement learning pipeline** that learns how to dynamically allocate capital across multiple stocks and cash, optimizing long-term portfolio growth while accounting for transaction costs, market dynamics, and risk.
 
 ---
 
-## 💡 Why This Project Exists
+## 💡 Why CapitalRL Exists
 
-Most trading projects focus on predicting prices. **Real portfolio management is about allocating capital over time.**
+Most trading projects focus on predicting prices.  
+**Real portfolio management is about allocating capital over time.**
 
-This project is built around that idea.
+CapitalRL is built around that idea.
 
-### Key Principles
+### Core Principles
 
 - Decisions are sequential, not independent
 - Capital is finite
@@ -25,7 +27,7 @@ This project is built around that idea.
 
 ---
 
-## 🚀 What This System Actually Does
+## 🚀 What CapitalRL Actually Does
 
 - Learns **how to allocate capital**, not where price will go
 - Operates on **multiple stocks + cash**
@@ -57,7 +59,7 @@ This project is built around that idea.
 ## 📊 Market Data
 
 | Property | Value |
-|----------|-------|
+|--------|------|
 | **Market** | NSE (India) |
 | **Universe** | Selected NIFTY 50 stocks |
 | **Source** | Yahoo Finance (yfinance) |
@@ -70,9 +72,6 @@ This project is built around that idea.
 
 At every timestep, the agent observes a **3D tensor**:
 
-```
-(features, stocks, window_length)
-```
 
 ### Engineered Features
 
@@ -93,9 +92,6 @@ This **price-relative formulation** improves generalization across assets and ma
 
 **Continuous allocation vector:**
 
-```
-(number_of_stocks + 1)
-```
 
 - Includes cash
 - Softmax-normalized
@@ -148,7 +144,7 @@ The agent is rewarded based on **portfolio value evolution**, not raw price chan
 ## 🧪 Training Setup
 
 | Component | Technology |
-|-----------|------------|
+|--------|------------|
 | **Frameworks** | TensorFlow, OpenAI Gym |
 | **Optimizer** | Adam |
 | **Replay Memory** | Experience replay |
@@ -180,52 +176,80 @@ Performance is evaluated using:
 
 ```bash
 pip install tensorflow gym yfinance ta numpy pandas matplotlib seaborn tqdm
+
 ```
 
----
+▶️ How to Run
 
-## ▶️ How to Run
+Download historical market data
 
-1. Download historical market data
-2. Preprocess OHLC data and compute indicators
-3. Initialize the trading environment
-4. Train the RL agent
-5. Evaluate on validation / test sets
-6. Analyze portfolio behavior visually
+Preprocess OHLC data and compute indicators
 
----
+Initialise the trading environment
 
-## 📌 What Makes This Project Different
+Train the RL agent
 
-- Built around **capital allocation**, not price prediction
-- Uses **realistic market constraints**
-- **Research-oriented** system design
-- Clean separation of environment, agent, and training loop
-- Easy to extend to:
-  - PPO / SAC
-  - Risk-adjusted rewards
-  - Larger asset universes
-  - Paper trading
+Evaluate on validation/test sets
 
----
+Analyse portfolio behaviour visually
 
-## 🔮 Next Steps
+📌 What Makes CapitalRL Different
 
-- Optimize for Sharpe / Sortino ratio
-- Risk-aware reward shaping
-- PPO / SAC implementation
-- Live paper-trading integration
-- Hyperparameter tuning
-- Multi-market expansion
+Built around capital allocation, not price prediction
 
----
+Uses realistic market constraints
 
-## 👤 Author
+Research-oriented system design
 
-**Utkarsh Alshi**  
-Software Engineer | Reinforcement Learning | Financial ML  
+Clean separation of environment, agent, and training loop
+
+Easy to extend to:
+
+PPO / SAC
+
+Risk-adjusted rewards
+
+Larger asset universes
+
+Paper trading
+
+🔮 Next Steps
+
+Optimise for Sharpe / Sortino ratio
+
+Risk-aware reward shaping
+
+PPO / SAC implementation
+
+Live paper-trading integration
+
+Hyperparameter tuning
+
+Multi-market expansion
+
+👤 Author
+
+Utkarsh Alshi
+Software Engineer | Reinforcement Learning | Financial ML
 📍 India
 
-Built out of curiosity, engineering rigor, and a desire to understand how intelligent systems allocate capital under uncertainty.
+Built out of curiosity, engineering rigour, and a desire to understand how intelligent systems allocate capital under uncertainty.
+
 
 ---
+
+### 🔥 Why this README works (recruiter lens)
+
+- Signals **original thinking**
+- Reads like a **research + engineering system**
+- Avoids buzzwords, shows **intentional design**
+- Clearly answers: *“Why did you build this?”*
+- Makes **CapitalRL** sound like a framework, not a toy project
+
+If you want next:
+- 🔹 A **TL;DR for recruiters at the top**
+- 🔹 A **Results section template**
+- 🔹 A **1-minute interview explanation**
+- 🔹 README badges + screenshots layout
+
+Just say the word.
